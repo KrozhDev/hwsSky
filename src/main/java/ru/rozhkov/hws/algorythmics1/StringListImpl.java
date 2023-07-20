@@ -1,5 +1,8 @@
 package ru.rozhkov.hws.algorythmics1;
 
+import ru.rozhkov.hws.algorythmics1.exceptions.NoElementException;
+import ru.rozhkov.hws.algorythmics1.exceptions.OutOfBoundsException;
+
 import java.util.Arrays;
 
 public class StringListImpl implements StringList {
@@ -18,6 +21,17 @@ public class StringListImpl implements StringList {
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
                 array[i] = item;
+                return item;
+            }
+            if (i == array.length - 1) {
+                size += 1;
+                String[] newArray = new String[size];
+                for (int j = 0; j < array.length; j++) {
+                    newArray[j] = array[j];
+                }
+                newArray[array.length] = item;
+                array = newArray;
+                return item;
             }
         }
         return item;
@@ -26,7 +40,7 @@ public class StringListImpl implements StringList {
     @Override
     public String add(int index, String item) {
         if (index >= array.length) {
-            throw new RuntimeException();
+            throw new OutOfBoundsException();
         } else {
             size += 1;
             String[] newArray = new String[size];
@@ -35,7 +49,7 @@ public class StringListImpl implements StringList {
             }
             newArray[index] = item;
             for (int i = index + 1; i < array.length; i++) {
-                newArray[i + 1] = array[i];
+                newArray[i] = array[i-1];
             }
             array = newArray;
         }
@@ -45,7 +59,7 @@ public class StringListImpl implements StringList {
     @Override
     public String set(int index, String item) {
         if (index >= array.length) {
-            throw new RuntimeException();
+            throw new OutOfBoundsException();
         } else {
             String[] newArray = new String[size];
             for (int i = 0; i < index; i++) {
@@ -67,24 +81,26 @@ public class StringListImpl implements StringList {
         for (int i = 0; i < array.length; i++) {
             if (item.equals(array[i])) {
                 index = i;
+                break;
             }
             if (i == array.length - 1) {
-                throw new RuntimeException();
+                throw new NoElementException();
             }
         }
         for (int i = 0; i < index; i++) {
             newArray[i] = array[i];
         }
         for (int i = index + 1; i < array.length; i++) {
-            newArray[i - 1] = array[i];
+            newArray[i-1] = array[i];
         }
+        array = newArray;
         return item;
     }
 
     @Override
     public String remove(int index) {
         if (index >= array.length) {
-            throw new RuntimeException();
+            throw new OutOfBoundsException();
         }
         String removedElem = array[index];
         String[] newArray = new String[size];
@@ -94,6 +110,7 @@ public class StringListImpl implements StringList {
         for (int i = index + 1; i < array.length; i++) {
             newArray[i - 1] = array[i];
         }
+        array = newArray;
         return removedElem;
     }
 
@@ -130,15 +147,19 @@ public class StringListImpl implements StringList {
     @Override
     public String get(int index) {
         if (index >= array.length || index < 0) {
-            throw new RuntimeException();
+            throw new OutOfBoundsException();
         }
         return array[index];
     }
 
     @Override
     public boolean equals(StringList otherList) {
+        if (this.size() != otherList.size()) {
+            return false;
+        }
+        String[] otherArray = otherList.toArray();
         for (int i = 0; i < array.length; i++) {
-            if (!array[i].equals(otherList.get(i))) {
+            if (array[i] != null && !array[i].equals(otherArray[i])) {
                 return false;
             }
         }
