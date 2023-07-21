@@ -32,6 +32,7 @@ public class StringListImplTest extends TestCase {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
     public void testTestAdd() {
         String expected = "Harry";
         String actual = testStringList.add(2,"Harry");
@@ -39,9 +40,8 @@ public class StringListImplTest extends TestCase {
         Assertions.assertEquals(expected,testStringList.toArray()[2]);
         Assertions.assertEquals("Alex",testStringList.toArray()[3]);
         Assertions.assertThrows(OutOfBoundsException.class, () -> testStringList.add(6,"Paul"));
-
     }
-
+    @Test
     public void testSet() {
         String expected = "Harry";
         String actual = testStringList.set(1,"Harry");
@@ -49,9 +49,8 @@ public class StringListImplTest extends TestCase {
         Assertions.assertEquals(expected,testStringList.toArray()[1]);
         Assertions.assertEquals("Alex",testStringList.toArray()[2]);
         Assertions.assertThrows(OutOfBoundsException.class, () -> testStringList.set(5,"Paul"));
-
     }
-
+    @Test
     public void testRemove() {
         String expected = "Michael";
         String actual = testStringList.remove("Michael");
@@ -60,7 +59,7 @@ public class StringListImplTest extends TestCase {
         Assertions.assertEquals(expected,testStringList.toArray()[1]);
         Assertions.assertThrows(NoElementException.class, () -> testStringList.remove("Paul"));
     }
-
+    @Test
     public void testTestRemove() {
         String expected = "Michael";
         String actual = testStringList.remove(1);
@@ -70,14 +69,14 @@ public class StringListImplTest extends TestCase {
         Assertions.assertThrows(OutOfBoundsException.class, () -> testStringList.remove(5));
     }
 
-
+    @Test
     public void testContains() {
         boolean expected = true;
         Assertions.assertEquals(expected, testStringList.contains("Michael") );
         expected = false;
         Assertions.assertEquals(expected, testStringList.contains("Paul") );
     }
-
+    @Test
     public void testIndexOf() {
         testStringList.add("Michael");
         int expected = 1;
@@ -85,7 +84,7 @@ public class StringListImplTest extends TestCase {
         expected = -1;
         Assertions.assertEquals(expected, testStringList.indexOf("Paul") );
     }
-
+    @Test
     public void testLastIndexOf() {
         testStringList.add("Michael");
         int expected = 3;
@@ -93,27 +92,27 @@ public class StringListImplTest extends TestCase {
         expected = -1;
         Assertions.assertEquals(expected, testStringList.lastIndexOf("Paul") );
     }
-
+    @Test
     public void testGet() {
         Assertions.assertEquals("Michael",testStringList.get(1));
         Assertions.assertThrows(OutOfBoundsException.class, () -> testStringList.get(-3));
         Assertions.assertThrows(OutOfBoundsException.class, () -> testStringList.get(6));
     }
-
+    @Test
     public void testTestEquals() {
         Assertions.assertEquals(true, testStringList.equals(createTestStringList()));
         Assertions.assertEquals(false, testStringList.equals(new StringListImpl(4)));
     }
-
+    @Test
     public void testSize() {
         Assertions.assertEquals(3,testStringList.size());
     }
-
+    @Test
     public void testIsEmpty() {
         Assertions.assertEquals(false,testStringList.isEmpty());
         Assertions.assertEquals(true,new StringListImpl(5).isEmpty());
     }
-
+    @Test
     public void testClear() {
         testStringList.clear();
         Assertions.assertEquals(true,testStringList.isEmpty());
