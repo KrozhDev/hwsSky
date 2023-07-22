@@ -78,5 +78,4 @@ public interface IntList {
     // и вернуть его.
     Integer[] toArray();
 
-    void sortInsertion();
 }

@@ -25,7 +25,7 @@ public class IntListImpl implements IntList {
                 return item;
             }
             if (i == array.length - 1) {
-                size += 1;
+                size *= 1.5;
                 Integer[] newArray = new Integer[size];
                 for (int j = 0; j < array.length; j++) {
                     newArray[j] = array[j];
@@ -127,7 +127,7 @@ public class IntListImpl implements IntList {
 
     @Override
     public boolean contains(Integer item) {
-        this.sortInsertion();
+        this.quickSort(array,0, array.length -1);
         int min = 0;
         int max = array.length - 1;
 
@@ -227,16 +227,53 @@ public class IntListImpl implements IntList {
         return newArray;
     }
 
-    @Override
-    public void sortInsertion() {
-        for (int i = 1; i < array.length; i++) {
-            int temp = array[i];
-            int j = i;
-            while (j > 0 && array[j - 1] >= temp) {
-                array[j] = array[j - 1];
-                j--;
-            }
-            array[j] = temp;
+//    @Override
+//    public void sortInsertion() {
+//        for (int i = 1; i < array.length; i++) {
+//            int temp = array[i];
+//            int j = i;
+//            while (j > 0 && array[j - 1] >= temp) {
+//                array[j] = array[j - 1];
+//                j--;
+//            }
+//            array[j] = temp;
+//        }
+//    }
+
+    private static void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
         }
     }
+
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    private static void swapElements(Integer[] arr, int left, int right) {
+        int temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+    }
+
+
+
+
+
+
 }
